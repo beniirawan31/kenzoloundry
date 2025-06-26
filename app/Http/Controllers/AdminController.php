@@ -17,6 +17,6 @@ class AdminController extends Controller
     }
 
     public function register(){
-        return view('Admin.Sesion.Adminregister');
+        return view('Admin.Session.Adminregister');
     }
 }
