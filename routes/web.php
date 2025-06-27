@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LandingpageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', [AdminController::class, 'index'])->name('index');
+Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 Route::get('/adminlogin', [AdminController::class, 'login'])->name('login');
+Route::post('/adminlogin', [AdminController::class, 'proses'])->name('login.proses');
 Route::get('/adminregister', [AdminController::class, 'register'])->name('register');
+Route::post('/adminregister', [AdminController::class, 'store'])->name('register.store');
+
+//landingpage
+Route::get('/', [LandingpageController::class, 'index']);

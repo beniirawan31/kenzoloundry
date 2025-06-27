@@ -5,11 +5,15 @@
         style="background: linear-gradient(to right bottom, #8e2de2, #ca6f81);">
         <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px; border-radius: 1.5rem;">
             <h2 class="text-center mb-4 text fw-bold" style="color: #640D5F;">Login</h2>
-            <form method="POST" action="">
+
+            {{-- SweetAlert Notif --}}
+            @include('komponen.notif')
+
+            <form method="POST" action="{{ route('login.proses') }}">
                 @csrf
                 <div class="mb-3">
                     <label for="email" class="form-label fw-semibold">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" required>
+                    <input type="email" name="email" id="email" class="form-control" required value="{{ old('email') }}">
                 </div>
 
                 <div class="mb-3">
@@ -20,9 +24,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="remember" id="remember">
-                        <label class="form-check-label small" for="remember">
-                            Ingat saya
-                        </label>
+                        <label class="form-check-label small" for="remember">Ingat saya</label>
                     </div>
                     <a href="#" class="small text-decoration-none text-danger">Lupa Password?</a>
                 </div>

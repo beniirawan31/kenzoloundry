@@ -2,4 +2,6 @@
 
 @section('content')
 aaa
+
+@include('komponen.notif')
 @endsection
