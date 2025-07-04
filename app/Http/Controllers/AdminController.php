@@ -10,10 +10,7 @@ use Spatie\FlareClient\View;
 
 class AdminController extends Controller
 {
-    public function index()
-    {
-        return view('Admin.Admin.index');
-    }
+
 
     public function login()
     {
@@ -30,7 +27,7 @@ class AdminController extends Controller
         if (Auth::attempt($credentials, $request->remember)) {
             $request->session()->regenerate();
 
-            return redirect()->route('admin')->with('success', 'Login berhasil!');
+            return redirect()->route('dashboard')->with('success', 'Login berhasil!');
         }
 
         return back()->with('error', 'Email atau password salah!');
