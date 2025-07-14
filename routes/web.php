@@ -27,11 +27,24 @@ Route::post('/adminregister', [AdminController::class, 'store'])->name('register
 
 //dashboard admin
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+// Layanan
 Route::get('/layanan', [DashboardController::class, 'layanan'])->name('layanan');
+Route::get('/layanan/create', [DashboardController::class, 'layananCreate'])->name('layanan.create');
+Route::post('/layanan/store', [DashboardController::class, 'layananStore'])->name('layanan.store');
+Route::get('/layanan/edit/{id}', [DashboardController::class, 'layananEdit'])->name('layanan.edit');
+Route::put('/layanan/update/{id}', [DashboardController::class, 'layananUpdate'])->name('layanan.update');
+Route::delete('/layanan/{id}', [DashboardController::class, 'destroy'])->name('layanan.destroy');
+
+
+
 Route::get('/order', [DashboardController::class, 'order'])->name('order');
 Route::get('/laporan', [DashboardController::class, 'laporan'])->name('laporan');
 Route::get('/pembayaran', [DashboardController::class, 'pembayaran'])->name('pembayaran');
 Route::get('/kurir', [DashboardController::class, 'kurir'])->name('kurir');
+// pelanggan
+Route::get('/pelanggang', [DashboardController::class, 'pelanggan'])->name('pelanggan');
+Route::delete('/pelanggang/{id}', [DashboardController::class, 'hapusPelanggan'])->name('pelanggan.destroy');
+
 
 
 
