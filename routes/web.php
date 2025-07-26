@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingpageController;
+use App\Http\Controllers\orderController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
 
@@ -37,13 +38,24 @@ Route::delete('/layanan/{id}', [DashboardController::class, 'destroy'])->name('l
 
 
 
-Route::get('/order', [DashboardController::class, 'order'])->name('order');
+
 Route::get('/laporan', [DashboardController::class, 'laporan'])->name('laporan');
 Route::get('/pembayaran', [DashboardController::class, 'pembayaran'])->name('pembayaran');
 Route::get('/kurir', [DashboardController::class, 'kurir'])->name('kurir');
 // pelanggan
 Route::get('/pelanggang', [DashboardController::class, 'pelanggan'])->name('pelanggan');
 Route::delete('/pelanggang/{id}', [DashboardController::class, 'hapusPelanggan'])->name('pelanggan.destroy');
+
+
+
+//order
+Route::prefix('order')->group(function () {
+    Route::get('/', [OrderController::class, 'index'])->name('order');
+    Route::post('/status/{id}', [OrderController::class, 'updateStatus']);
+    Route::get('/delete/{id}', [OrderController::class, 'destroy']);
+    Route::get('/create', [OrderController::class, 'create'])->name('order.create');
+    Route::post('/store', [OrderController::class, 'store'])->name('order.store');
+});
 
 
 

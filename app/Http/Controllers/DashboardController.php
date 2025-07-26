@@ -70,15 +70,7 @@ class DashboardController extends Controller
     }
 
 
-    //order
-
-
-
-    public function order()
-    {
-        return view('Admin.Admin.order');
-    }
-
+   
     public function laporan()
     {
         return view('Admin.Admin.laporan');
