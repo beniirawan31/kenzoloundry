@@ -10,7 +10,7 @@ License: https://freebootstrap.net/license
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> Nova Free Bootstrap Template for Agency &mdash; by FreeBootstrap.net </title>
+    <title> Kenzo &mdash; laundry </title>
 
     <!-- ======= Google Font =======-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -59,13 +59,9 @@ License: https://freebootstrap.net/license
 
                     <!-- If you plan to use an image logo, uncomment this if it is commented-->
 
-                    <!-- logo dark--><img class="logo dark img-fluid"
-                        src="{{ asset('templete/landing/images/logo-dark.svg') }}"
-                        alt="FreeBootstrap.net image placeholder">
-
-                    <!-- logo light--><img class="logo light img-fluid"
-                        src="{{ asset('templete/landing/images/logo-light.svg') }}"
-                        alt="FreeBootstrap.net image placeholder">
+                    <img class="logo dark img-fluid w-auto" style="max-height: 50px;"
+                        src="{{ asset('templete/landing/images/logo-light.png') }}" alt="Logo">
+                        
 
                 </a>
                 <!-- End Logo-->
@@ -123,8 +119,8 @@ License: https://freebootstrap.net/license
                         @else
                             <!-- Jika pengguna sudah login -->
                             <li class="nav-item d-flex align-items-center">
-                                <img src="{{ asset('templete/landing/images/hero-img-1-min.jpg') }}" class="rounded-circle" height="36"
-                                    width="36" alt="User Photo">
+                                <img src="{{ asset('templete/landing/images/hero-img-1-min.jpg') }}" class="rounded-circle"
+                                    height="36" width="36" alt="User Photo">
                                 <div class="ms-2 d-none d-lg-block text-danger small">
                                     {{ auth()->user()->name }}
                                 </div>
