@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ekspressController;
 use App\Http\Controllers\LandingpageController;
 use App\Http\Controllers\orderController;
 use Illuminate\Support\Facades\Route;
@@ -56,6 +57,11 @@ Route::prefix('order')->group(function () {
     Route::get('/create', [OrderController::class, 'create'])->name('order.create');
     Route::post('/store', [OrderController::class, 'store'])->name('order.store');
 });
+
+
+//ekspres
+Route::get('/pesanan/create', [ekspressController::class, 'create'])->name('pesanan.create');
+Route::post('/pesanan/store', [ekspressController::class, 'store'])->name('pesanan.store');
 
 
 
