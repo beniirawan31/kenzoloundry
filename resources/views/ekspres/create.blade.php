@@ -1,12 +1,10 @@
 @extends('layout.user.apps')
 
 @section('content')
-<div class="container">
-    @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+<section class="about__v4 section">
+    <div class="container">
 
-    <h3>Tambah Pesanan</h3>
+    <h3 >Tambah Pesanan</h3>
 
     <form action="{{ route('pesanan.store') }}" method="POST">
         @csrf
@@ -53,6 +51,8 @@
         <button type="submit" class="btn btn-primary mt-4">Simpan Pesanan</button>
     </form>
 </div>
+
+</section>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

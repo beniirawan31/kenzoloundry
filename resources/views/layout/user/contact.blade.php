@@ -73,19 +73,6 @@
             <!-- ======= Footer =======-->
             <footer class="footer pt-5 pb-5">
                 <div class="container">
-                    <div class="row mb-5 pb-4">
-                        <div class="col-md-7">
-                            <h2 class="fs-5">Join our newsletter</h2>
-                            <p>Stay updated with our latest templates and offers—join our newsletter today!</p>
-                        </div>
-                        <div class="col-md-5">
-                            <form class="d-flex gap-2">
-                                <input class="form-control" type="email" placeholder="Email your email"
-                                    required="">
-                                <button class="btn btn-primary fs-6" type="submit">Subscribe</button>
-                            </form>
-                        </div>
-                    </div>
                     <div class="row justify-content-between mb-5 g-xl-5">
                         <div class="col-md-4 mb-5 mb-lg-0">
                             <h3 class="mb-3">About</h3>

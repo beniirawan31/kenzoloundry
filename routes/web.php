@@ -60,6 +60,7 @@ Route::prefix('order')->group(function () {
 
 
 //ekspres
+Route::get('/ekspres', [ekspressController::class, 'index'])->name('ekspres');
 Route::get('/pesanan/create', [ekspressController::class, 'create'])->name('pesanan.create');
 Route::post('/pesanan/store', [ekspressController::class, 'store'])->name('pesanan.store');
 
