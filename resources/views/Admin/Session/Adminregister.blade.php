@@ -3,7 +3,7 @@
 @section('content')
 <div class="min-vh-100 d-flex align-items-center justify-content-center" style="background: linear-gradient(to right bottom, #8e2de2, #ca6f81);">
     <div class="card shadow-lg p-4" style="width: 100%; max-width: 500px; border-radius: 1.5rem;">
-        <h2 class="text-center mb-4 fw-bold" style="color: #640D5F;">Register</h2>
+        <h2 class="text-center mb-4 fw-bold" style="color: #640D5F;">Kenzo loundry</h2>
 
        @include('komponen.notif')
 

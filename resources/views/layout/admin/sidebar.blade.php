@@ -64,12 +64,12 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{ route('kurir') }}" class="nav-link {{ request()->routeIs('kurir') ? 'active-custom' : '' }}">
                         <i class="nav-icon fas fa-user-shield fa-lg"></i>
                         <p>Kurir</p>
                     </a>
-                </li>
+                </li> --}}
 
             </ul>
         </nav>

@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ekspressController;
 use App\Http\Controllers\LandingpageController;
 use App\Http\Controllers\orderController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
 
@@ -20,6 +21,11 @@ use Illuminate\Support\Facades\Response;
 |
 */
 
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/')
+        ->with('success', 'Anda berhasil logout!');
+})->name('logout');
 
 
 Route::get('/adminlogin', [AdminController::class, 'login'])->name('login');
