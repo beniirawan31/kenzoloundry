@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('pelanggans', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('layanan');
-            $table->string('harga');
-            $table->integer('total_harga');
-            $table->text('pesan')->nullable();
-            $table->enum('status', ['Menunggu', 'Diproses', 'Selesai', 'Dibatalkan', 'Dalam Pengiriman'])->default('Menunggu');
+            $table->string('email')->unique();
+            $table->string('no_hp', 15)->nullable();
+            $table->string('password');
+            $table->text('alamat')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('pelanggans');
     }
 };

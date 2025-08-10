@@ -59,7 +59,7 @@ Route::delete('/pelanggang/{id}', [DashboardController::class, 'hapusPelanggan']
 Route::prefix('order')->group(function () {
     Route::get('/', [OrderController::class, 'index'])->name('order');
     Route::post('/status/{id}', [OrderController::class, 'updateStatus']);
-    Route::get('/delete/{id}', [OrderController::class, 'destroy']);
+    Route::delete('/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
     Route::get('/create', [OrderController::class, 'create'])->name('order.create');
     Route::post('/store', [OrderController::class, 'store'])->name('order.store');
 });

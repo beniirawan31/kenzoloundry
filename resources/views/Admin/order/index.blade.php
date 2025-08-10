@@ -3,6 +3,9 @@
 @section('content')
     @include('komponen.notif')
 
+    <!-- Bootstrap JS (bundle sudah termasuk Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <section class="content-header">
@@ -19,37 +22,82 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12">
-                    <div class="card" style="border-radius: 0.5rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-                        <div class="card-header d-flex justify-content-end align-items-center"
-                            style="background-color: #320A6B; color: white;">
+                    <div class="card"
+                        style="border-radius: 0.75rem; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                        <div class="card-header d-flex justify-content-between align-items-center"
+                            style="background: linear-gradient(90deg, #320A6B, #5D3BE8); color: white; padding: 1rem 1.5rem;">
+
+                            <a href="{{ route('order.create') }}" class="btn btn-light btn-sm"
+                                style="border-radius: 20px; font-weight: 500; transition: 0.2s;">
+                                <i class="fas fa-plus"></i> Tambah Order
+                            </a>
                         </div>
 
-                        <div class="card-body">
-                            <table id="example2" class="table table-bordered table-hover text-center">
+                        <div class="card-body" style="padding: 1.5rem;">
+                            <table id="example2" class="table table-bordered table-hover text-center align-middle"
+                                style="border-radius: 0.5rem; overflow: hidden;">
                                 <thead style="background-color: #065084; color: white;">
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Pelanggan</th>
-                                        <th>Layanan</th>
+                                        <th>Nama Layanan</th>
                                         <th>Harga</th>
+                                        <th>Jumlah</th>
                                         <th>Total Harga</th>
+                                        <th>Tanggal Order </th>
+                                        <th>Tanggal Selesai Order </th>
+                                        <th>Bukti Pembayaran</th>
                                         <th>Pesan</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody style="background-color: #f9f9f9;">
                                     @foreach ($orders as $index => $order)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
-                                            <td>{{ $order->nama }}</td>
-                                            <td>{{ $order->layanan }}</td>
-                                            <td>{{ $order->harga }}</td>
+                                            <td>{{ $order->pelanggan->nama ?? '-' }}</td>
+                                            <td>{{ $order->layanan->nama ?? '-' }}</td>
+                                            <td>Rp {{ number_format($order->layanan->harga ?? 0, 0, ',', '.') }}</td>
+                                            <td>{{ $order->jumlah_item }}</td>
                                             <td>Rp {{ number_format($order->total_harga, 0, ',', '.') }}</td>
+                                            <td>{{ $order->tanggal_order ?? '-' }}</td>
+                                            <td>{{ $order->tanggal_selesai ?? '-' }}</td>
+                                            <td>
+                                                @if ($order->bukti_pembayaran)
+                                                    <!-- Thumbnail gambar yang bisa diklik -->
+                                                    <img src="{{ asset('storage/' . $order->bukti_pembayaran) }}"
+                                                        alt="Bukti Pembayaran"
+                                                        style="max-width: 40px; max-height: 40px; object-fit: cover; cursor: pointer;"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#imageModal{{ $order->id }}" />
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="imageModal{{ $order->id }}"
+                                                        tabindex="-1" aria-labelledby="imageModalLabel{{ $order->id }}"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-body p-0 text-center">
+                                                                    <img src="{{ asset('storage/' . $order->bukti_pembayaran) }}"
+                                                                        alt="Bukti Pembayaran Large"
+                                                                        style="max-width: 600px; height: 600px;">
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary btn-sm"
+                                                                        data-bs-dismiss="modal">Tutup</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
                                             <td class="text-start">{{ $order->pesan }}</td>
                                             <td>
                                                 @php
-                                                    $color = match ($order->status) {
+                                                    $color = match ($order->status_order) {
                                                         'Selesai' => 'success',
                                                         'Diproses' => 'warning',
                                                         'Menunggu' => 'secondary',
@@ -58,29 +106,39 @@
                                                         default => 'dark',
                                                     };
                                                 @endphp
-                                                <span class="badge bg-{{ $color }}">{{ $order->status }}</span>
+                                                <span class="badge bg-{{ $color }}"
+                                                    style="padding: 0.5rem 0.75rem; font-size: 0.8rem; border-radius: 0.5rem;">
+                                                    {{ $order->status_order }}
+                                                </span>
                                             </td>
                                             <td>
-
-                                                <button class="btn btn-sm btn-success btn-status"
-                                                    data-id="{{ $order->id }}" data-nama="{{ $order->nama }}"
-                                                    data-status="{{ $order->status }}">
+                                                <button class="btn btn-sm btn-success btn-status" title="Ubah Status"
+                                                    data-id="{{ $order->id }}"
+                                                    data-nama="{{ $order->pelanggan->nama ?? '-' }}"
+                                                    data-status="{{ $order->status_order }}">
                                                     <i class="fas fa-sync-alt"></i>
                                                 </button>
 
-
                                                 <button class="btn btn-sm btn-danger btn-hapus"
-                                                    data-id="{{ $order->id }}" data-nama="{{ $order->nama }}">
+                                                    data-id="{{ $order->id }}"
+                                                    data-nama="{{ $order->pelanggan->nama ?? '-' }}">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
+
+                                                <form id="form-delete-{{ $order->id }}"
+                                                    action="{{ route('order.destroy', $order->id) }}" method="POST"
+                                                    style="display:none;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
-                        <!-- /.card-body -->
                     </div>
+
                 </div>
             </div>
         </div>
@@ -104,12 +162,12 @@
                     cancelButtonText: 'Batal'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Ganti dengan URL Laravel kamu
-                        window.location.href = `/order/delete/${id}`;
+                        document.getElementById(`form-delete-${id}`).submit();
                     }
                 });
             });
         });
+
 
         // SweetAlert - Ubah Status
         document.querySelectorAll('.btn-status').forEach(btn => {
@@ -147,7 +205,7 @@
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
                             },
                             body: JSON.stringify({
-                                status: result.value
+                                status_order: result.value
                             })
                         }).then(response => {
                             if (response.ok) {
