@@ -1,10 +1,10 @@
-@extends('layout.admin.nav')
+@extends('layout.pelanggan.nav')
 
 @section('content')
     @include('komponen.notif')
     <section class="content-header">
         <div class="container-fluid">
-            <h1>Dashboard Admin</h1>
+            <h1>Dashboard Pelanggan</h1>
         </div>
     </section>
 
@@ -71,26 +71,6 @@
                             Laporan <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>
-                </div>
-            </div>
-
-            {{-- Grafik Status Order --}}
-            <div class="card">
-                <div class="card-header" style="background-color: #320A6B; color: white;">
-                    <strong>Grafik Status Order</strong>
-                </div>
-                <div class="card-body">
-                    <canvas id="orderChart" height="60"></canvas> {{-- Dikurangi dari 100 ke 60 --}}
-                </div>
-            </div>
-
-            {{-- Grafik Pengunjung --}}
-            <div class="card mt-4">
-                <div class="card-header" style="background-color: #78B9B5; color: white;">
-                    <strong>Grafik Pengunjung per Bulan</strong>
-                </div>
-                <div class="card-body">
-                    <canvas id="visitorChart" height="60"></canvas> {{-- Dikurangi dari 100 ke 60 --}}
                 </div>
             </div>
 

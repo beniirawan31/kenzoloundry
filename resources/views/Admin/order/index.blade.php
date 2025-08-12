@@ -3,16 +3,15 @@
 @section('content')
     @include('komponen.notif')
 
-    <!-- Bootstrap JS (bundle sudah termasuk Popper) -->
+    <!-- Bootstrap & SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Order</h1>
+                    <h1 class="fw-bold text-">Halaman Order</h1>
                 </div>
             </div>
         </div>
@@ -22,41 +21,44 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-12">
-                    <div class="card"
-                        style="border-radius: 0.75rem; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                    <div class="card shadow-lg border-0" style="border-radius: 0.75rem; overflow: hidden;">
                         <div class="card-header d-flex justify-content-between align-items-center"
-                            style="background: linear-gradient(90deg, #320A6B, #5D3BE8); color: white; padding: 1rem 1.5rem;">
-
+                            style="background: linear-gradient(90deg, #320A6B, #5D3BE8); color: white;">
                             <a href="{{ route('order.create') }}" class="btn btn-light btn-sm"
-                                style="border-radius: 20px; font-weight: 500; transition: 0.2s;">
+                                style="border-radius: 20px; font-weight: 500;">
                                 <i class="fas fa-plus"></i> Tambah Order
                             </a>
                         </div>
 
-                        <div class="card-body" style="padding: 1.5rem;">
-                            <table id="example2" class="table table-bordered table-hover text-center align-middle"
+                        <div class="card-body p-3">
+                            <table id="example2"
+                                class="table table-bordered table-hover text-center align-middle shadow-sm"
                                 style="border-radius: 0.5rem; overflow: hidden;">
                                 <thead style="background-color: #065084; color: white;">
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Pelanggan</th>
+                                        <th>Alamat</th>
+                                        <th>Nomor HP</th>
                                         <th>Nama Layanan</th>
                                         <th>Harga</th>
                                         <th>Jumlah</th>
                                         <th>Total Harga</th>
-                                        <th>Tanggal Order </th>
-                                        <th>Tanggal Selesai Order </th>
+                                        <th>Tanggal Order</th>
+                                        <th>Tanggal Selesai</th>
                                         <th>Bukti Pembayaran</th>
                                         <th>Pesan</th>
                                         <th>Status</th>
-                                        <th>Action</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody style="background-color: #f9f9f9;">
                                     @foreach ($orders as $index => $order)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
-                                            <td>{{ $order->pelanggan->nama ?? '-' }}</td>
+                                            <td>{{ $order->nama ?? '-' }}</td>
+                                            <td>{{ $order->alamat ?? '-' }}</td>
+                                            <td>{{ $order->nomor_hp ?? '-' }}</td>
                                             <td>{{ $order->layanan->nama ?? '-' }}</td>
                                             <td>Rp {{ number_format($order->layanan->harga ?? 0, 0, ',', '.') }}</td>
                                             <td>{{ $order->jumlah_item }}</td>
@@ -65,23 +67,18 @@
                                             <td>{{ $order->tanggal_selesai ?? '-' }}</td>
                                             <td>
                                                 @if ($order->bukti_pembayaran)
-                                                    <!-- Thumbnail gambar yang bisa diklik -->
                                                     <img src="{{ asset('storage/' . $order->bukti_pembayaran) }}"
                                                         alt="Bukti Pembayaran"
                                                         style="max-width: 40px; max-height: 40px; object-fit: cover; cursor: pointer;"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#imageModal{{ $order->id }}" />
-
-                                                    <!-- Modal -->
                                                     <div class="modal fade" id="imageModal{{ $order->id }}"
-                                                        tabindex="-1" aria-labelledby="imageModalLabel{{ $order->id }}"
-                                                        aria-hidden="true">
+                                                        tabindex="-1">
                                                         <div class="modal-dialog modal-dialog-centered modal-lg">
                                                             <div class="modal-content">
                                                                 <div class="modal-body p-0 text-center">
                                                                     <img src="{{ asset('storage/' . $order->bukti_pembayaran) }}"
-                                                                        alt="Bukti Pembayaran Large"
-                                                                        style="max-width: 600px; height: 600px;">
+                                                                        style="width: 100%; height: auto;">
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary btn-sm"
@@ -94,7 +91,16 @@
                                                     -
                                                 @endif
                                             </td>
-                                            <td class="text-start">{{ $order->pesan }}</td>
+                                            <td>
+                                                @php
+                                                    $pesan = $order->pesan ?? '-';
+                                                    $pesanPendek = Str::limit($pesan, 5, '...');
+                                                @endphp
+                                                <span class="text-primary pesan-pop" style="cursor: pointer;"
+                                                    data-pesan="{{ $pesan }}">
+                                                    {{ $pesanPendek }}
+                                                </span>
+                                            </td>
                                             <td>
                                                 @php
                                                     $color = match ($order->status_order) {
@@ -106,25 +112,20 @@
                                                         default => 'dark',
                                                     };
                                                 @endphp
-                                                <span class="badge bg-{{ $color }}"
-                                                    style="padding: 0.5rem 0.75rem; font-size: 0.8rem; border-radius: 0.5rem;">
+                                                <span class="badge bg-{{ $color }} px-3 py-2 rounded-pill">
                                                     {{ $order->status_order }}
                                                 </span>
                                             </td>
                                             <td>
                                                 <button class="btn btn-sm btn-success btn-status" title="Ubah Status"
-                                                    data-id="{{ $order->id }}"
-                                                    data-nama="{{ $order->pelanggan->nama ?? '-' }}"
+                                                    data-id="{{ $order->id }}" data-nama="{{ $order->nama ?? '-' }}"
                                                     data-status="{{ $order->status_order }}">
                                                     <i class="fas fa-sync-alt"></i>
                                                 </button>
-
-                                                <button class="btn btn-sm btn-danger btn-hapus"
-                                                    data-id="{{ $order->id }}"
-                                                    data-nama="{{ $order->pelanggan->nama ?? '-' }}">
+                                                <button class="btn btn-sm btn-danger btn-hapus" title="Hapus"
+                                                    data-id="{{ $order->id }}" data-nama="{{ $order->nama ?? '-' }}">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
-
                                                 <form id="form-delete-{{ $order->id }}"
                                                     action="{{ route('order.destroy', $order->id) }}" method="POST"
                                                     style="display:none;">
@@ -145,6 +146,18 @@
     </section>
 
     <script>
+        // Pop-up pesan
+        document.querySelectorAll('.pesan-pop').forEach(el => {
+            el.addEventListener('click', function() {
+                Swal.fire({
+                    title: 'Pesan Lengkap',
+                    text: this.dataset.pesan,
+                    icon: 'info',
+                    confirmButtonText: 'Tutup'
+                });
+            });
+        });
+
         // SweetAlert - Hapus
         document.querySelectorAll('.btn-hapus').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -167,7 +180,6 @@
                 });
             });
         });
-
 
         // SweetAlert - Ubah Status
         document.querySelectorAll('.btn-status').forEach(btn => {

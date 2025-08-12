@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ekspressController;
 use App\Http\Controllers\LandingpageController;
 use App\Http\Controllers\orderController;
+use App\Http\Controllers\PelangganController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
@@ -88,3 +89,19 @@ Route::get('/laporan/export/word-all', function () {
 
 //landingpage
 Route::get('/', [LandingpageController::class, 'index']);
+
+
+
+//pelamggan
+Route::get('/pelanggan/login', [PelangganController::class, 'login'])->name('pelanggan.login');
+Route::post('/pelanggan/login', [PelangganController::class, 'loginProses'])->name('pelanggan.login.proses');
+Route::get('/pelanggan/register', [PelangganController::class, 'register'])->name('pelanggan.register');
+Route::post('/pelanggan/register', [PelangganController::class, 'registerProses'])->name('pelanggan.register.proses');
+
+// Dashboard Pelanggan
+Route::get('/pelanggan/dashboard', [PelangganController::class, 'dashboard'])
+    ->name('pelanggan.dashboard')
+    ->middleware('auth:pelanggan');
+
+// Logout Pelanggan
+Route::post('/pelanggan/logout', [PelangganController::class, 'logout'])->name('pelanggan.logout');

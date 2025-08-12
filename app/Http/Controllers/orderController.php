@@ -29,7 +29,10 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'pelanggan_id'       => 'required|exists:pelanggans,id',
+            'nama'               => 'required|string|max:100',
+            'alamat'             => 'required|string|max:255',
+            'nomor_hp'           => 'required|string|max:15',
+            // 'pelanggan_id'       => 'required|exists:pelanggans,id',
             'layanan_id'         => 'required|exists:layanans,id',
             'jumlah_item'        => 'required|integer|min:1',
             'pesan'              => 'nullable|string|max:255',
@@ -52,7 +55,10 @@ class OrderController extends Controller
         }
 
         Order::create([
-            'pelanggan_id'       => $request->pelanggan_id,
+            'nama'               => $request->nama,
+            'alamat'             => $request->alamat,
+            'nomor_hp'           => $request->nomor_hp,
+            // 'pelanggan_id'       => $request->pelanggan_id,
             'layanan_id'         => $request->layanan_id,
             'jumlah_item'        => $request->jumlah_item,
             'total_harga'        => $total_harga,

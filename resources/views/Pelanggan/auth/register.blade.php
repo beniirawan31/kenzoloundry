@@ -4,16 +4,17 @@
     <div class="min-vh-100 d-flex align-items-center justify-content-center"
         style="background: linear-gradient(to right bottom, #8e2de2, #ca6f81);">
         <div class="card shadow-lg p-4" style="width: 100%; max-width: 500px; border-radius: 1.5rem;">
-            <h2 class="text-center mb-4 fw-bold" style="color: #640D5F;">Kenzo loundry</h2>
+            <h2 class="text-center mb-4 fw-bold" style="color: #640D5F;">Kenzo Laundry</h2>
 
+            {{-- SweetAlert Notif --}}
             @include('komponen.notif')
 
-            <form method="POST" action="{{ route('register.store') }}">
+            <form method="POST" action="{{ route('pelanggan.register.proses') }}">
                 @csrf
 
                 <div class="mb-3">
-                    <label for="name" class="form-label fw-semibold">Nama Lengkap</label>
-                    <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}"
+                    <label for="nama" class="form-label fw-semibold">Nama Lengkap</label>
+                    <input type="text" name="nama" id="nama" class="form-control" value="{{ old('nama') }}"
                         required>
                 </div>
 
@@ -27,15 +28,6 @@
                     <label for="no_hp" class="form-label fw-semibold">Nomor HP</label>
                     <input type="text" name="no_hp" id="no_hp" class="form-control" value="{{ old('no_hp') }}"
                         required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="role" class="form-label fw-semibold">Daftar Sebagai</label>
-                    <select name="role" id="role" class="form-control" required>
-                        <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
-                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                        <option value="kurir" {{ old('role') == 'kurir' ? 'selected' : '' }}>Kurir</option>
-                    </select>
                 </div>
 
                 <div class="mb-3">
@@ -58,7 +50,9 @@
 
             <p class="text-center mt-4 small text-muted">
                 Sudah punya akun?
-                <a href="{{ route('login') }}" class="text-decoration-none text-danger fw-semibold">Login di sini</a>
+                <a href="{{ route('pelanggan.login') }}" class="text-decoration-none text-danger fw-semibold">
+                    Login di sini
+                </a>
             </p>
         </div>
     </div>

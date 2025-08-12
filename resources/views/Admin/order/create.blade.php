@@ -4,32 +4,6 @@
     @include('komponen.notif')
 
     <div class="card mb-4">
-
-        {{-- Notifikasi error validasi --}}
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <strong>Terjadi kesalahan!</strong>
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        {{-- Notifikasi sukses --}}
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        {{-- Notifikasi error dari session --}}
-        @if (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
         <div class="card-header" style="background-color: #065084; color: white;">
             Tambah Order
         </div>
@@ -38,20 +12,17 @@
                 @csrf
                 <div class="row">
                     <div class="col-md-4 mb-3">
-                        <label>Pelanggan</label>
-                        <select name="pelanggan_id" class="form-control" required>
-                            <option value="">-- Pilih Pelanggan --</option>
-                            @foreach ($pelanggans as $pelanggan)
-                                <option value="{{ $pelanggan->id }}">{{ $pelanggan->nama }}</option>
-                            @endforeach
-                        </select>
+                        <label>Nama Pelanggan</label>
+                        <input type="text" name="nama" class="form-control" placeholder="Masukkan nama pelanggan"
+                            value="{{ old('nama') }}" required>
                     </div>
                     <div class="col-md-4 mb-3">
                         <label>Nama Layanan</label>
                         <select name="layanan_id" class="form-control" id="layananSelect" required>
                             <option value="">-- Pilih Layanan --</option>
                             @foreach ($layanans as $layanan)
-                                <option value="{{ $layanan->id }}" data-harga="{{ $layanan->harga }}">
+                                <option value="{{ $layanan->id }}" data-harga="{{ $layanan->harga }}"
+                                    {{ old('layanan_id') == $layanan->id ? 'selected' : '' }}>
                                     {{ $layanan->nama }}
                                 </option>
                             @endforeach
@@ -62,9 +33,9 @@
                         <input type="text" name="harga" id="harga" class="form-control" readonly>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <label>Jumlah</label>
+                        <label>Berat (kg)</label>
                         <input type="number" name="jumlah_item" id="jumlahItem" class="form-control" min="1"
-                            value="1" required>
+                            value="{{ old('jumlah_item', 1) }}" required>
                     </div>
                     <div class="col-md-2 mb-3">
                         <label>Total Harga</label>
@@ -74,27 +45,39 @@
 
                 <div class="mb-3">
                     <label>Pesan</label>
-                    <textarea name="pesan" class="form-control"></textarea>
+                    <textarea name="pesan" class="form-control">{{ old('pesan') }}</textarea>
                 </div>
 
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label>Tanggal Order</label>
-                        <input type="date" name="tanggal_order" class="form-control" required>
+                        <input type="date" name="tanggal_order" class="form-control" value="{{ old('tanggal_order') }}" required>
                     </div>
                     <div class="col-md-4 mb-3">
                         <label>Tanggal Selesai</label>
-                        <input type="date" name="tanggal_selesai" class="form-control">
+                        <input type="date" name="tanggal_selesai" class="form-control" value="{{ old('tanggal_selesai') }}">
                     </div>
                     <div class="col-md-4 mb-3">
                         <label>Metode Pembayaran</label>
                         <select name="metode_pembayaran" class="form-control" required>
                             <option value="">-- Pilih Metode --</option>
-                            <option value="Cash">Cash</option>
-                            <option value="Transfer">Transfer</option>
-                            <option value="E-Wallet">E-Wallet</option>
+                            <option value="Cash" {{ old('metode_pembayaran') == 'Cash' ? 'selected' : '' }}>Cash</option>
+                            <option value="Transfer" {{ old('metode_pembayaran') == 'Transfer' ? 'selected' : '' }}>Transfer</option>
+                            <option value="E-Wallet" {{ old('metode_pembayaran') == 'E-Wallet' ? 'selected' : '' }}>E-Wallet</option>
                         </select>
                     </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Alamat</label>
+                    <input type="text" name="alamat" class="form-control" placeholder="Masukkan alamat pelanggan"
+                        value="{{ old('alamat') }}" required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Nomor HP</label>
+                    <input type="text" name="nomor_hp" class="form-control" placeholder="Masukkan nomor HP pelanggan"
+                        value="{{ old('nomor_hp') }}" required>
                 </div>
 
                 <div class="mb-3">
@@ -104,9 +87,39 @@
 
                 <button type="submit" class="btn btn-primary">Simpan</button>
             </form>
-
         </div>
     </div>
+
+    {{-- SweetAlert Notifikasi --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session("success") }}',
+                confirmButtonColor: '#065084'
+            })
+        @endif
+
+        @if (session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: '{{ session("error") }}',
+                confirmButtonColor: '#d33'
+            })
+        @endif
+
+        @if ($errors->any())
+            Swal.fire({
+                icon: 'error',
+                title: 'Validasi Gagal',
+                html: `{!! implode('<br>', $errors->all()) !!}`,
+                confirmButtonColor: '#d33'
+            })
+        @endif
+    </script>
 
     <script>
         const layananSelect = document.getElementById('layananSelect');

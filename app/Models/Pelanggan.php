@@ -3,18 +3,26 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable; // ubah dari Model ke Authenticatable
+use Illuminate\Notifications\Notifiable;
 
-class Pelanggan extends Model
+class Pelanggan extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
+
     protected $table = 'pelanggans';
+
     protected $fillable = [
         'nama',
         'email',
         'no_hp',
         'password',
         'alamat'
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
 
     public function orders()
