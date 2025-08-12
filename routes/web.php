@@ -6,9 +6,11 @@ use App\Http\Controllers\ekspressController;
 use App\Http\Controllers\LandingpageController;
 use App\Http\Controllers\orderController;
 use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\AdminPembayaran;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
+
 
 
 /*
@@ -103,5 +105,16 @@ Route::get('/pelanggan/dashboard', [PelangganController::class, 'dashboard'])
     ->name('pelanggan.dashboard')
     ->middleware('auth:pelanggan');
 
+// pelangan order
+Route::get('/pelanggan/order', [PelangganController::class, 'pelangganOrder'])->name('pelanggan.order.index');
+Route::get('/pelanggan/create', [PelangganController::class, 'pelanggancreate'])->name('pelanggan.order.create');
+Route::post('/pelanggan/order', [PelangganController::class, 'pelangganstore'])->name('pelanggan.order.store');
+
 // Logout Pelanggan
 Route::post('/pelanggan/logout', [PelangganController::class, 'logout'])->name('pelanggan.logout');
+
+
+//BayarAdmin
+Route::get('/pembayaran', [AdminPembayaran::class, 'index'])->name('pembayaran.index');
+Route::post('/konfirmasi/{id}', [AdminPembayaran::class, 'konfirmasi'])->name('admin.konfirmasi');
+Route::post('/tolak/{id}', [AdminPembayaran::class, 'tolak'])->name('admin.tolak');

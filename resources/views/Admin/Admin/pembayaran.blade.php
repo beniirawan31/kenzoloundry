@@ -26,12 +26,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                                $pembayaran = [
-                                    ['nama' => 'Ahmad Rizki', 'total' => 'Rp 25.000', 'bukti' => 'bukti1.jpg', 'status' => 'Menunggu'],
-                                    ['nama' => 'Siti Nurhaliza', 'total' => 'Rp 20.000', 'bukti' => 'bukti2.jpg', 'status' => 'Menunggu'],
-                                ];
-                            @endphp
+                    
 
                             @foreach($pembayaran as $index => $item)
                                 <tr>

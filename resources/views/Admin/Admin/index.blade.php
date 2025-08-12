@@ -52,7 +52,7 @@
                         <div class="icon">
                             <i class="fas fa-money-check-alt"></i>
                         </div>
-                        <a href="{{ route('pembayaran') }}" class="small-box-footer text-white">
+                        <a href="{{ route('pembayaran.index') }}" class="small-box-footer text-white">
                             Lihat <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>

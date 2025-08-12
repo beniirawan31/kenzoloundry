@@ -2,7 +2,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #320A6B;">
     <!-- Brand Logo -->
     <a href="{{ route('dashboard') }}" class="brand-link" style="background-color: #065084;">
-        <img src="{{ asset('admin/dist/img/AdminLTELogo.png') }}" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="{{ asset('admin/dist/img/AdminLTELogo.png') }}" alt="Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
         <span class="brand-text font-weight-bold text-white">Kenzo Laundry</span>
     </a>
 
@@ -11,7 +12,8 @@
         <!-- Sidebar user panel -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+                <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
+                    alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block text-white">Pelanggan</a>
@@ -20,10 +22,12 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column text-lg" data-widget="treeview" role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column text-lg" data-widget="treeview" role="menu"
+                data-accordion="false">
 
                 <li class="nav-item">
-                    <a href="{{ route('pelanggan.dashboard') }}" class="nav-link {{ request()->routeIs('pelanggan.dashboard') ? 'active-custom' : '' }}">
+                    <a href="{{ route('pelanggan.dashboard') }}"
+                        class="nav-link {{ request()->routeIs('pelanggan.dashboard') ? 'active-custom' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt fa-lg"></i>
                         <p>Dashboard</p>
                     </a>
@@ -31,7 +35,8 @@
 
 
                 <li class="nav-item">
-                    <a href="" class="nav-link {{ request()->routeIs('order') ? 'active-custom' : '' }}">
+                    <a href="{{ route('pelanggan.order.index') }}"
+                        class="nav-link {{ request()->routeIs('pelanggan.order.index') ? 'active-custom' : '' }}">
                         <i class="nav-icon fas fa-shopping-cart fa-lg"></i>
                         <p>Order</p>
                     </a>
@@ -44,7 +49,7 @@
                     </a>
                 </li>
 
-               
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

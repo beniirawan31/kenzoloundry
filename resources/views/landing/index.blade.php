@@ -364,7 +364,7 @@
                     </form>
                     <button type="button" class="btn btn-outline-light btn-sm" id="btn-logout"> Logout </button>
                 @else
-                    <a class="btn btn-accent" href="{{ route('login') }}">Login Sekarang</a>
+                    <a class="btn btn-accent" href="{{ route('pelanggan.login') }}">Login Sekarang</a>
                 @endif
             </div>
 
@@ -382,7 +382,7 @@
                     <div class="col-lg-6">
                         <div class="hero-content" data-aos="fade-up" data-aos-delay="200">
                             <h1 class="fw-bold mb-2">Selamat Datang di</h1>
-                            <h1 class="fw-bold mb-4">Kenzo Laundry</h1>
+                            <h2 class="fw-bold mb-4">Kenzo Laundry</h2>
                             <p class="mb-4">Layanan laundry profesional dengan sistem pemantauan real-time untuk
                                 pengalaman laundry yang lebih mudah, cepat, dan terpercaya.</p>
                             <div class="hero-buttons d-flex gap-3">

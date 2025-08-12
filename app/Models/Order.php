@@ -45,4 +45,8 @@ class Order extends Model
     {
         return $this->belongsTo(User::class, 'admin_input');
     }
+    public function pembayaran()
+    {
+        return $this->hasOne(Pembayaran::class);
+    }
 }
