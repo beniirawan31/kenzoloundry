@@ -105,7 +105,7 @@
                                                 @php
                                                     $color = match ($order->status_order) {
                                                         'Selesai' => 'success',
-                                                        'Diproses' => 'warning',
+                                                        'Proses' => 'warning',
                                                         'Menunggu' => 'secondary',
                                                         'Dalam Pengiriman' => 'info',
                                                         'Dibatalkan' => 'danger',
@@ -194,7 +194,7 @@
                     input: 'select',
                     inputOptions: {
                         'Menunggu': 'Menunggu',
-                        'Diproses': 'Diproses',
+                        'Proses': 'Diproses',
                         'Selesai': 'Selesai',
                         'Dibatalkan': 'Dibatalkan',
                         'Dalam Pengiriman': 'Dalam Pengiriman',

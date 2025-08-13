@@ -15,7 +15,7 @@ class AdminPembayaran extends Controller
         // Get all orders with their relationships (including payment if exists)
         $orders = Order::with(['pelanggan', 'layanan', 'pembayaran'])
             ->latest()
-            ->paginate(6); // pagination 6
+            ->paginate(10); // pagination 6
 
         // These might be needed for forms/select options
         $pelanggans = Pelanggan::select('id', 'nama')->get();

@@ -11,7 +11,9 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::with(['pelanggan', 'layanan'])->get();
+        $orders = Order::with(['pelanggan', 'layanan'])->orderBy('id', 'desc') // dari yang terbaru ke yang paling lama
+            ->get();
+
         $pelanggans = Pelanggan::all();
         $layanans = Layanan::all();
         return view('admin.order.index', compact('orders', 'pelanggans', 'layanans'));

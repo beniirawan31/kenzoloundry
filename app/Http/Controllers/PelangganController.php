@@ -58,10 +58,49 @@ class PelangganController extends Controller
         return redirect()->route('pelanggan.login')->with('success', 'Pendaftaran berhasil, silakan login!');
     }
 
+    //dashboard
     public function dashboard()
     {
-        return view('Pelanggan.dashboard.index');
+        $userId = Auth::id();
+
+        // Summary
+        $totalLayanan = Layanan::count();
+        $totalOrder = Order::where('pelanggan_id', $userId)->count();
+        $menungguOrder = Order::where('pelanggan_id', $userId)
+            ->where('status_order', 'Menunggu')
+            ->count();
+        $orderSelesai = Order::where('pelanggan_id', $userId)
+            ->where('status_pembayaran', 'Lunas')
+            ->count();
+
+        // Ambil layanan
+        $layanans = Layanan::all();
+
+        // Data grafik status order
+        $statusOrderData = Order::where('pelanggan_id', $userId)
+            ->selectRaw("status_order, COUNT(*) as total")
+            ->groupBy('status_order')
+            ->pluck('total', 'status_order');
+
+        // Data grafik pembayaran
+        $statusPembayaranData = Order::where('pelanggan_id', $userId)
+            ->selectRaw("status_pembayaran, COUNT(*) as total")
+            ->groupBy('status_pembayaran')
+            ->pluck('total', 'status_pembayaran');
+
+        return view('Pelanggan.dashboard.index', compact(
+            'totalLayanan',
+            'totalOrder',
+            'menungguOrder',
+            'orderSelesai',
+            'layanans',
+            'statusOrderData',
+            'statusPembayaranData'
+        ));
     }
+
+
+
 
     public function logout()
     {
@@ -87,13 +126,10 @@ class PelangganController extends Controller
 
     public function pelanggancreate()
     {
-        // Kirim $pelanggans supaya view yang butuh dropdown pelanggan tidak error.
-        // Jika view pelanggan (front-end) tidak perlu daftar pelanggan, kamu bisa menghapus baris ini.
         $pelanggans = Pelanggan::select('id', 'nama')->get();
 
         $layanans = Layanan::select('id', 'nama', 'harga')->get();
 
-        // Pastikan path view sesuai (besar/kecil huruf sensitif pada beberapa OS)
         return view('Pelanggan.order.create', compact('layanans', 'pelanggans'));
     }
 
@@ -144,4 +180,39 @@ class PelangganController extends Controller
         return redirect()->route('pelanggan.order.index')->with('success', 'Order berhasil ditambahkan.');
     }
 
+
+
+    // Pembayaran
+    public function pembayaranorder()
+    {
+        $pelangganId = auth()->guard('pelanggan')->id() ?? auth()->id();
+
+        $orders = Order::with('layanan')
+            ->where('pelanggan_id', $pelangganId)
+            ->latest()
+            ->get();
+
+        return view('Pelanggan.bayar.bayar', compact('orders'));
+    }
+
+
+    public function uploadBuktiPembayaran(Request $request, $id)
+    {
+        $request->validate([
+            'bukti_pembayaran' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $pelangganId = auth()->guard('pelanggan')->id();
+
+        $order = Order::where('pelanggan_id', $pelangganId)->findOrFail($id);
+
+        $buktiPath = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
+
+        $order->update([
+            'bukti_pembayaran' => $buktiPath,
+            'status_pembayaran' => 'Menunggu Konfirmasi',
+        ]);
+
+        return back()->with('success', 'Bukti pembayaran berhasil diunggah. Menunggu verifikasi admin.');
+    }
 }

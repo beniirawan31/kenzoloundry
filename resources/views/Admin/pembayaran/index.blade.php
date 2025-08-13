@@ -18,7 +18,7 @@
                     <table class="table table-bordered table-hover text-center">
                         <thead style="background-color: #065084; color: white;">
                             <tr>
-                                <th>ID Order</th>
+                                <th>No</th>
                                 <th>Pelanggan</th>
                                 <th>Layanan</th>
                                 <th>Tanggal Order</th>
@@ -33,7 +33,7 @@
                         <tbody>
                             @foreach ($orders as $order)
                                 <tr>
-                                    <td>{{ $order->id }}</td>
+                                    <td>{{ $orders->firstItem() + $loop->index }}</td> <!-- Nomor urut -->
                                     <td>{{ $order->pelanggan->nama ?? 'N/A' }}</td>
                                     <td>{{ $order->layanan->nama ?? 'N/A' }}</td>
                                     <td>{{ $order->tanggal_order }}</td>
@@ -80,7 +80,9 @@
                             @endforeach
                         </tbody>
                     </table>
-                    {{-- pagination --}}
+                    <div class="d-flex justify-content-end mt-3">
+                        {{ $orders->links('pagination::bootstrap-4') }}
+                    </div>
                 </div>
             </div>
         </div>

@@ -42,7 +42,7 @@
                         <td>
                             <span class="badge 
                                 @if($order->status_order == 'Menunggu') bg-warning
-                                @elseif($order->status_order == 'Proses') bg-primary
+                                @elseif($order->status_order == 'Proses') bg-info
                                 @elseif($order->status_order == 'Selesai') bg-success
                                 @elseif($order->status_order == 'Gagal') bg-danger
                                 @else bg-secondary @endif">

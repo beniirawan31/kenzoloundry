@@ -16,7 +16,7 @@
                 <div class="col-md-3">
                     <div class="small-box" style="background-color: #320A6B; color: white;">
                         <div class="inner">
-                            <h3>5</h3>
+                           <h3>{{ $totalLayanan }}</h3>
                             <p>Total Layanan</p>
                         </div>
                         <div class="icon">
@@ -31,7 +31,7 @@
                 <div class="col-md-3">
                     <div class="small-box" style="background-color: #065084; color: white;">
                         <div class="inner">
-                            <h3>12</h3>
+                            <h3>{{ $totalOrder }}</h3>
                             <p>Total Order</p>
                         </div>
                         <div class="icon">
@@ -46,8 +46,8 @@
                 <div class="col-md-3">
                     <div class="small-box" style="background-color: #78B9B5; color: white;">
                         <div class="inner">
-                            <h3>3</h3>
-                            <p>Menunggu Pembayaran</p>
+                            <h3>{{ $menungguOrder }}</h3>
+                            <p>Dalam Proses</p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-money-check-alt"></i>
@@ -61,7 +61,7 @@
                 <div class="col-md-3">
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>7</h3>
+                            <h3>{{ $orderSelesai }}</h3>
                             <p>Order Selesai</p>
                         </div>
                         <div class="icon">

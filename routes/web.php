@@ -53,8 +53,13 @@ Route::get('/laporan', [DashboardController::class, 'laporan'])->name('laporan')
 Route::get('/pembayaran', [DashboardController::class, 'pembayaran'])->name('pembayaran');
 Route::get('/kurir', [DashboardController::class, 'kurir'])->name('kurir');
 // pelanggan
-Route::get('/pelanggang', [DashboardController::class, 'pelanggan'])->name('pelanggan');
-Route::delete('/pelanggang/{id}', [DashboardController::class, 'hapusPelanggan'])->name('pelanggan.destroy');
+// Tampilkan daftar pelanggan & user
+Route::get('/pelanggan', [DashboardController::class, 'pelanggan'])->name('pelanggan');
+
+// Hapus user & pelanggan
+Route::delete('/admin/user/{id}', [DashboardController::class, 'hapusUser'])->name('user.destroy');
+Route::delete('/admin/pelanggan/{id}', [DashboardController::class, 'hapusPelanggan'])->name('pelanggan.destroy');
+
 
 
 
@@ -99,6 +104,10 @@ Route::get('/pelanggan/login', [PelangganController::class, 'login'])->name('pel
 Route::post('/pelanggan/login', [PelangganController::class, 'loginProses'])->name('pelanggan.login.proses');
 Route::get('/pelanggan/register', [PelangganController::class, 'register'])->name('pelanggan.register');
 Route::post('/pelanggan/register', [PelangganController::class, 'registerProses'])->name('pelanggan.register.proses');
+Route::get('/pelanggan/pembayaran', [PelangganController::class, 'pembayaranorder'])->name('pelanggan.pembayaran');
+Route::post('/pelanggan/pembayaran/{id}', [PelangganController::class, 'uploadBuktiPembayaran'])->name('pelanggan.uploadBukti');
+
+
 
 // Dashboard Pelanggan
 Route::get('/pelanggan/dashboard', [PelangganController::class, 'dashboard'])

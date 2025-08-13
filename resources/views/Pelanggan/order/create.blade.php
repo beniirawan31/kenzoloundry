@@ -13,15 +13,11 @@
                 <div class="row">
                     {{-- Pilih Pelanggan --}}
                     <div class="col-md-4 mb-3">
-                        <label>Nama Pelanggan</label>
-                        <select name="pelanggan_id" class="form-control" required>
-                            <option value="">-- Pilih Pelanggan --</option>
-                            @foreach ($pelanggans as $pelanggan)
-                                <option value="{{ $pelanggan->id }}"
-                                    {{ old('pelanggan_id') == $pelanggan->id ? 'selected' : '' }}>
-                                    {{ $pelanggan->nama }}
-                                </option>
-                            @endforeach
+                        <label>Nama Akun</label>
+                        <select name="pelanggan_id" class="form-control" readonly>
+                            <option value="{{ auth()->guard('pelanggan')->id() ?? auth()->id() }}">
+                                {{ auth()->guard('pelanggan')->user()->nama ?? auth()->user()->name }}
+                            </option>
                         </select>
                     </div>
 
@@ -94,13 +90,14 @@
                 <div class="col-md-4 mb-3">
                     <label>Nomor HP</label>
                     <input type="text" name="nomor_hp" class="form-control" placeholder="Masukkan nomor HP pelanggan"
-                        value="{{ old('nomor_hp') }}" required>
+                        value="{{ old('nomor_hp', auth()->guard('pelanggan')->user()->no_hp ?? '') }}" required>
                 </div>
+
                 <div class="col-md-4 mb-3">
                     <label>Nama Pelanggan</label>
                     <input type="text" name="nama" class="form-control" placeholder="Masukkan nama pelanggan"
-                        value="{{ old('nama') }}" required>
-                </div>
+                        value="{{ old('nama', auth()->guard('pelanggan')->user()->nama ?? '') }}" required>
+                </div>  
                 <div class="mb-3">
                     <label>Bukti Pembayaran</label>
                     <input type="file" name="bukti_pembayaran" class="form-control" accept="image/*">

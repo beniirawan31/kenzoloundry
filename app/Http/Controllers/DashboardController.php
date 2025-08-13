@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Layanan;
+use App\Models\Order;
+use App\Models\Pelanggan;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -13,7 +15,28 @@ class DashboardController extends Controller
 
     public function index()
     {
-        return view('Admin.Admin.index');
+        // Total layanan
+        $totalLayanan = Layanan::count();
+
+        // Total order
+        $totalOrder = Order::count();
+
+        // Menunggu pembayaran (status_pembayaran = 'Menunggu')
+        $menungguOrder = Order::where('status_order', 'Menunggu')->count();
+
+        // Order selesai (status_order = 'Selesai' atau pembayaran = 'Lunas')
+        $orderSelesai = Order::where('status_pembayaran', 'Lunas')->count();
+
+        // Ambil semua layanan untuk card daftar layanan
+        $layanans = Layanan::all();
+
+        return view('Admin.Admin.index', compact(
+            'totalLayanan',
+            'totalOrder',
+            'menungguOrder',
+            'orderSelesai',
+            'layanans'
+        ));
     }
 
     public function layanan()
@@ -82,14 +105,17 @@ class DashboardController extends Controller
     }
 
 
-// pelanggan
+    // Tampilkan daftar user & pelanggan
     public function pelanggan()
     {
-        $users = User::latest()->get();
-        return view('Admin.Admin.pelanggan', compact('users'));
+        $users = User::latest()->get();          // Semua user terbaru
+        $pelanggans = Pelanggan::latest()->get(); // Semua pelanggan terbaru
+
+        return view('Admin.Admin.pelanggan', compact('users', 'pelanggans'));
     }
 
-    public function hapusPelanggan($id)
+    // Hapus user (non-admin)
+    public function hapusUser($id)
     {
         $user = User::findOrFail($id);
 
@@ -102,8 +128,19 @@ class DashboardController extends Controller
         return back()->with('success', 'User berhasil dihapus.');
     }
 
+    // Hapus pelanggan
+    public function hapusPelanggan($id)
+    {
+        $pelanggan = Pelanggan::findOrFail($id);
+        $pelanggan->delete();
 
-    
+        return back()->with('success', 'Pelanggan berhasil dihapus.');
+    }
+
+
+
+
+
 
     // kurir
     public function kurir()

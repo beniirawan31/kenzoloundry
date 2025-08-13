@@ -16,7 +16,7 @@
                 <div class="col-md-3">
                     <div class="small-box" style="background-color: #320A6B; color: white;">
                         <div class="inner">
-                            <h3>5</h3>
+                            <h3>{{ $totalLayanan }}</h3>
                             <p>Total Layanan</p>
                         </div>
                         <div class="icon">
@@ -31,7 +31,7 @@
                 <div class="col-md-3">
                     <div class="small-box" style="background-color: #065084; color: white;">
                         <div class="inner">
-                            <h3>12</h3>
+                            <h3>{{ $totalOrder }}</h3>
                             <p>Total Order</p>
                         </div>
                         <div class="icon">
@@ -46,8 +46,8 @@
                 <div class="col-md-3">
                     <div class="small-box" style="background-color: #78B9B5; color: white;">
                         <div class="inner">
-                            <h3>3</h3>
-                            <p>Menunggu Pembayaran</p>
+                            <h3>{{ $menungguOrder }}</h3>
+                            <p>Dalam proses</p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-money-check-alt"></i>
@@ -61,7 +61,7 @@
                 <div class="col-md-3">
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>7</h3>
+                            <h3>{{ $orderSelesai }}</h3>
                             <p>Order Selesai</p>
                         </div>
                         <div class="icon">
@@ -74,6 +74,38 @@
                 </div>
             </div>
 
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h5>Status Order</h5>
+                    <canvas id="orderChart" width="400" height="200"></canvas>
+                </div>
+                <div class="col-md-6 " style="height: 400px">
+                    <h5>Status Pembayaran</h5>
+                    <canvas id="paymentChart" width="200" height="100"></canvas>
+                </div>
+            </div>
+
+            <section class="content">
+                <div class="container-fluid">
+                    <h4 class="mb-3">Daftar Layanan</h4>
+                    <div class="row">
+                        @foreach ($layanans as $layanan)
+                            <div class="col-md-3 mb-4">
+                                <div class="card">
+                                    <img src="{{ $layanan->image ?? 'https://via.placeholder.com/250x150' }}"
+                                        class="card-img-top" alt="{{ $layanan->nama }}"
+                                        style="height: 150px; object-fit: cover;">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">{{ $layanan->nama }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+
+
 
 
         </div>
@@ -82,44 +114,45 @@
     {{-- Chart.js --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Grafik Status Order
-        const ctx = document.getElementById('orderChart').getContext('2d');
-        const orderChart = new Chart(ctx, {
+        // Grafik Status Order (Bar Chart)
+        const orderCtx = document.getElementById('orderChart').getContext('2d');
+        const orderChart = new Chart(orderCtx, {
             type: 'bar',
             data: {
-                labels: ['Selesai', 'Diproses', 'Menunggu'],
+                labels: {!! json_encode($statusOrderData->keys()) !!}, // Selesai, Diproses, Menunggu
                 datasets: [{
                     label: 'Jumlah Order',
-                    data: [7, 3, 2],
+                    data: {!! json_encode($statusOrderData->values()) !!},
                     backgroundColor: ['#28a745', '#ffc107', '#6c757d'],
                     borderWidth: 1
                 }]
             },
             options: {
                 responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        stepSize: 1
                     }
                 }
             }
         });
 
-        // Grafik Pengunjung
-        const visitorCtx = document.getElementById('visitorChart').getContext('2d');
-        const visitorChart = new Chart(visitorCtx, {
-            type: 'line',
+        // Grafik Status Pembayaran (Pie Chart)
+        const paymentCtx = document.getElementById('paymentChart').getContext('2d');
+        const paymentChart = new Chart(paymentCtx, {
+            type: 'pie',
             data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+                labels: {!! json_encode($statusPembayaranData->keys()) !!}, // Lunas, Menunggu, Belum Bayar
                 datasets: [{
-                    label: 'Jumlah Pengunjung',
-                    data: [45, 60, 80, 100, 90, 110, 130, 125, 115, 140, 160, 170],
-                    backgroundColor: 'rgba(6, 80, 132, 0.2)',
-                    borderColor: '#065084',
-                    borderWidth: 2,
-                    fill: true,
-                    tension: 0.3,
-                    pointBackgroundColor: '#065084'
+                    label: 'Jumlah Pembayaran',
+                    data: {!! json_encode($statusPembayaranData->values()) !!},
+                    backgroundColor: ['#28a745', '#ffc107', '#dc3545']
                 }]
             },
             options: {
@@ -129,13 +162,13 @@
                         position: 'top'
                     },
                     tooltip: {
-                        mode: 'index',
-                        intersect: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                let value = context.raw || 0;
+                                return label + ': ' + value;
+                            }
+                        }
                     }
                 }
             }
