@@ -16,7 +16,9 @@
                     alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block text-white">Admin</a>
+                <a href="#" class="d-block text-white">
+                    {{ Auth::check() ? Auth::user()->name : 'Guest' }}
+                </a>
             </div>
         </div>
 

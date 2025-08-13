@@ -15,44 +15,47 @@
                 <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
                     alt="User Image">
             </div>
-            <div class="info">
-                <a href="#" class="d-block text-white">Pelanggan</a>
-            </div>
+
+           <div class="info">
+            <a href="#" class="d-block text-white">
+                {{ Auth::guard('pelanggan')->check() ? Auth::guard('pelanggan')->user()->nama : 'Guest' }}
+            </a>
         </div>
+    </div>
 
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column text-lg" data-widget="treeview" role="menu"
-                data-accordion="false">
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column text-lg" data-widget="treeview" role="menu"
+            data-accordion="false">
 
-                <li class="nav-item">
-                    <a href="{{ route('pelanggan.dashboard') }}"
-                        class="nav-link {{ request()->routeIs('pelanggan.dashboard') ? 'active-custom' : '' }}">
-                        <i class="nav-icon fas fa-tachometer-alt fa-lg"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-
-
-                <li class="nav-item">
-                    <a href="{{ route('pelanggan.order.index') }}"
-                        class="nav-link {{ request()->routeIs('pelanggan.order.index') ? 'active-custom' : '' }}">
-                        <i class="nav-icon fas fa-shopping-cart fa-lg"></i>
-                        <p>Order</p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="" class="nav-link {{ request()->routeIs('pembayaran') ? 'active-custom' : '' }}">
-                        <i class="nav-icon fas fa-receipt fa-lg"></i>
-                        <p>Pembayaran</p>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="{{ route('pelanggan.dashboard') }}"
+                    class="nav-link {{ request()->routeIs('pelanggan.dashboard') ? 'active-custom' : '' }}">
+                    <i class="nav-icon fas fa-tachometer-alt fa-lg"></i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
 
 
-            </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
+            <li class="nav-item">
+                <a href="{{ route('pelanggan.order.index') }}"
+                    class="nav-link {{ request()->routeIs('pelanggan.order.index') ? 'active-custom' : '' }}">
+                    <i class="nav-icon fas fa-shopping-cart fa-lg"></i>
+                    <p>Order</p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="" class="nav-link {{ request()->routeIs('pembayaran') ? 'active-custom' : '' }}">
+                    <i class="nav-icon fas fa-receipt fa-lg"></i>
+                    <p>Pembayaran</p>
+                </a>
+            </li>
+
+
+        </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
 </aside>
