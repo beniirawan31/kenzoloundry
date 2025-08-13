@@ -34,7 +34,7 @@
                     <select name="role" id="role" class="form-control" required>
                         <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
                         <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                        <option value="kurir" {{ old('role') == 'kurir' ? 'selected' : '' }}>Kurir</option>
+                        <option value="pimpinan" {{ old('role') == 'pimpinan' ? 'selected' : '' }}>pimpinan</option>
                     </select>
                 </div>
 

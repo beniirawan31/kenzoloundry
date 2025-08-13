@@ -15,6 +15,7 @@
                 <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
                     alt="User Image">
             </div>
+
             <div class="info">
                 <a href="#" class="d-block text-white">
                     {{ Auth::check() ? Auth::user()->name : 'Guest' }}
@@ -28,59 +29,20 @@
                 data-accordion="false">
 
                 <li class="nav-item">
-                    <a href="{{ route('dashboard') }}"
-                        class="nav-link {{ request()->routeIs('dashboard') ? 'active-custom' : '' }}">
+                    <a href="{{ route('pimpinan.index') }}"
+                        class="nav-link {{ request()->routeIs('pimpinan.index') ? 'active-custom' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt fa-lg"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('layanan') }}"
-                        class="nav-link {{ request()->routeIs('layanan') ? 'active-custom' : '' }}">
-                        <i class="nav-icon fas fa-concierge-bell fa-lg"></i>
-                        <p>Layanan</p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('order') }}"
-                        class="nav-link {{ request()->routeIs('order') ? 'active-custom' : '' }}">
-                        <i class="nav-icon fas fa-shopping-cart fa-lg"></i>
-                        <p>Order</p>
-                    </a>
-                </li>
-{{-- 
-                <li class="nav-item">
-                    <a href="{{ route('laporan') }}"
-                        class="nav-link {{ request()->routeIs('laporan') ? 'active-custom' : '' }}">
+                    <a href="{{ route('pimpinan.laporan') }}"
+                        class="nav-link {{ request()->routeIs('pimpinan.laporan') ? 'active-custom' : '' }}">
                         <i class="nav-icon fas fa-chart-bar fa-lg"></i>
                         <p>Laporan</p>
                     </a>
-                </li> --}}
-
-                <li class="nav-item">
-                    <a href="{{ route('pembayaran.index') }}"
-                        class="nav-link {{ request()->routeIs('pembayaran.index') ? 'active-custom' : '' }}">
-                        <i class="nav-icon fas fa-receipt fa-lg"></i>
-                        <p>Pembayaran</p>
-                    </a>
                 </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('pelanggan') }}"
-                        class="nav-link {{ request()->routeIs('pelanggan') ? 'active-custom' : '' }}">
-                        <i class="nav-icon fas fa-users fa-lg"></i>
-                        <p>Data Users</p>
-                    </a>
-                </li>
-
-                {{-- <li class="nav-item">
-                    <a href="{{ route('kurir') }}" class="nav-link {{ request()->routeIs('kurir') ? 'active-custom' : '' }}">
-                        <i class="nav-icon fas fa-user-shield fa-lg"></i>
-                        <p>Kurir</p>
-                    </a>
-                </li> --}}
 
             </ul>
         </nav>

@@ -69,7 +69,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <form action="" method="POST">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
                         <button type="submit" class="nav-link btn btn-link"
                             style="color: rgb(223, 31, 31); text-decoration: none;">
                             <i class="fas fa-sign-out-alt"></i> Logout

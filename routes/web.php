@@ -7,6 +7,7 @@ use App\Http\Controllers\LandingpageController;
 use App\Http\Controllers\orderController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\AdminPembayaran;
+use App\Http\Controllers\PimpinanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
@@ -59,8 +60,6 @@ Route::get('/pelanggan', [DashboardController::class, 'pelanggan'])->name('pelan
 // Hapus user & pelanggan
 Route::delete('/admin/user/{id}', [DashboardController::class, 'hapusUser'])->name('user.destroy');
 Route::delete('/admin/pelanggan/{id}', [DashboardController::class, 'hapusPelanggan'])->name('pelanggan.destroy');
-
-
 
 
 //order
@@ -127,3 +126,20 @@ Route::post('/pelanggan/logout', [PelangganController::class, 'logout'])->name('
 Route::get('/pembayaran', [AdminPembayaran::class, 'index'])->name('pembayaran.index');
 Route::post('/konfirmasi/{id}', [AdminPembayaran::class, 'konfirmasi'])->name('admin.konfirmasi');
 Route::post('/tolak/{id}', [AdminPembayaran::class, 'tolak'])->name('admin.tolak');
+
+
+
+// Login & Logout Pimpinan
+Route::get('/pimpinanlogin', [PimpinanController::class, 'login'])->name('pimpinan.login');
+Route::post('/pimpinan/login', [PimpinanController::class, 'proses'])->name('pimpinan.proses');
+Route::post('/pimpinan/logout', [PimpinanController::class, 'logout'])->name('pimpinan.logout');
+Route::get('/pimpinan/laporan/download/word', [PimpinanController::class, 'downloadWord'])->name('pimpinan.laporan.word');
+Route::get('/pimpinan/laporan/download/pdf', [PimpinanController::class, 'downloadPdf'])->name('pimpinan.laporan.pdf');
+
+
+
+// Halaman Pimpinan (hanya bisa diakses jika sudah login)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/pimpinan', [PimpinanController::class, 'index'])->name('pimpinan.index');
+    Route::get('/pimpinan/laporan', [PimpinanController::class, 'laporanPimpinan'])->name('pimpinan.laporan');
+});

@@ -45,7 +45,7 @@ class AdminController extends Controller
             'email' => 'required|email|unique:users,email',
             'no_hp' => 'required|string|max:20',
             'password' => 'required|confirmed|min:3',
-            'role' => 'in:user,admin,kurir',
+            'role' => 'in:user,admin,pimpinan',
         ]);
 
         User::create([
