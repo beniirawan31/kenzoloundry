@@ -107,6 +107,7 @@ class PelangganController extends Controller
         Auth::guard('pelanggan')->logout();
         return redirect()->route('pelanggan.login')->with('success', 'Anda telah logout.');
     }
+    
 
 
 

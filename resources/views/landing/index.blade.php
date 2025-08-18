@@ -358,15 +358,24 @@
 
             <!-- Login Button -->
             <div class="position-absolute end-0 me-3 d-flex align-items-center gap-2">
-                @if (Auth::check())
-                    <span class="text-accent fw-bold"> Halo, {{ Auth::user()->name }}</span>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;"> @csrf
+                @if (Auth::guard('pelanggan')->check())
+                    <span class="text-accent fw-bold">
+                        Halo, {{ Auth::guard('pelanggan')->user()->nama }}
+                    </span>
+                    <form id="logout-form" action="{{ route('pelanggan.logout') }}" method="POST"
+                        style="display: none;">
+                        @csrf
                     </form>
-                    <button type="button" class="btn btn-outline-light btn-sm" id="btn-logout"> Logout </button>
+                    <button type="button" class="btn btn-outline-light btn-sm" id="btn-logout">
+                        Logout
+                    </button>
                 @else
-                    <a class="btn btn-accent" href="{{ route('pelanggan.login') }}">Login Sekarang</a>
+                    <a class="btn btn-accent" href="{{ route('pelanggan.login') }}">
+                        Login Sekarang
+                    </a>
                 @endif
             </div>
+
 
             <!-- Mobile Nav Toggle -->
             <i class="mobile-nav-toggle d-xl-none bi bi-list ms-3" style="color: white;"></i>
@@ -721,7 +730,8 @@
                                 </div>
                                 <div>
                                     <h5 class="mb-1" style="color: var(--accent-color);">Alamat</h5>
-                                    <p class="mb-0 text-light">Taluak, Kec. Lintau Buo, Kabupaten Tanah Datar, Sumatera Barat.
+                                    <p class="mb-0 text-light">Taluak, Kec. Lintau Buo, Kabupaten Tanah Datar, Sumatera
+                                        Barat.
                                     </p>
                                 </div>
                             </div>

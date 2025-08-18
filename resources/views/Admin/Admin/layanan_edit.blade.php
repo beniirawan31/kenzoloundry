@@ -21,7 +21,8 @@
                         </div>
 
                         <div class="card-body">
-                            <form action="{{ route('layanan.update', $layanan->id) }}" method="POST">
+                            <form action="{{ route('layanan.update', $layanan->id) }}" method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 
@@ -46,6 +47,20 @@
                                 <div class="form-group">
                                     <label for="keterangan">Keterangan</label>
                                     <textarea name="keterangan" class="form-control" rows="4">{{ old('keterangan', $layanan->keterangan) }}</textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="foto_layanan">Foto Layanan</label>
+                                    <input type="file" name="foto_layanan" class="form-control">
+
+                                    @if ($layanan->foto_layanan)
+                                        <div class="mt-2">
+                                            <p>Foto saat ini:</p>
+                                            <img src="{{ asset('storage/' . $layanan->foto_layanan) }}" alt="Foto Layanan"
+                                                width="120" height="120"
+                                                style="object-fit: cover; border-radius: 8px;">
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <div class="d-flex justify-content-between align-items-center mt-3">

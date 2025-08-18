@@ -1,6 +1,9 @@
 @extends('layout.pelanggan.nav')
 
 @section('content')
+
+<!-- Bootstrap Bundle JS (sudah termasuk Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     @include('komponen.notif')
     <section class="content-header">
         <div class="container-fluid">
@@ -87,20 +90,105 @@
 
             <section class="content">
                 <div class="container-fluid">
+                    <h4 class="mb-3">Metode Pembayaran</h4>
+                    <div class="row justify-content-center">
+
+                        <!-- DANA -->
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="card shadow-sm text-center p-3" style="border-radius: 10px;">
+                                <img src="{{ asset('assets-user/img/dana.png') }}" alt="DANA" class="img-clickable"
+                                    data-bs-toggle="modal" data-bs-target="#imgModal"
+                                    data-img="{{ asset('assets-user/img/dana.png') }}"
+                                    style="height:120px; object-fit:contain; cursor:pointer;">
+                            </div>
+                        </div>
+
+                        <!-- OVO -->
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="card shadow-sm text-center p-3" style="border-radius: 10px;">
+                                <img src="{{ asset('assets-user/img/ovo.png') }}" alt="OVO" class="img-clickable"
+                                    data-bs-toggle="modal" data-bs-target="#imgModal"
+                                    data-img="{{ asset('assets-user/img/ovo.png') }}"
+                                    style="height:120px; object-fit:contain; cursor:pointer;">
+                            </div>
+                        </div>
+
+                        <!-- BRI -->
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="card shadow-sm text-center p-3" style="border-radius: 10px;">
+                                <img src="{{ asset('assets-user/img/bri.png') }}" alt="BRI" class="img-clickable"
+                                    data-bs-toggle="modal" data-bs-target="#imgModal"
+                                    data-img="{{ asset('assets-user/img/bri.png') }}"
+                                    style="height:120px; object-fit:contain; cursor:pointer;">
+                            </div>
+                        </div>
+
+                        <!-- GOPAY -->
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="card shadow-sm text-center p-3" style="border-radius: 10px;">
+                                <img src="{{ asset('assets-user/img/gopay.png') }}" alt="Gopay" class="img-clickable"
+                                    data-bs-toggle="modal" data-bs-target="#imgModal"
+                                    data-img="{{ asset('assets-user/img/gopay.png') }}"
+                                    style="height:120px; object-fit:contain; cursor:pointer;">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Modal Bootstrap -->
+            <div class="modal fade" id="imgModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content bg-transparent border-0">
+                        <div class="modal-body text-center">
+                            <img id="modalImage" src="" class="img-fluid rounded shadow" alt="Preview">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <section class="content">
+                <div class="container-fluid">
                     <h4 class="mb-3">Daftar Layanan</h4>
                     <div class="row">
                         @foreach ($layanans as $layanan)
                             <div class="col-md-3 mb-4">
-                                <div class="card">
-                                    <img src="{{ $layanan->image ?? 'https://via.placeholder.com/250x150' }}"
-                                        class="card-img-top" alt="{{ $layanan->nama }}"
-                                        style="height: 150px; object-fit: cover;">
+                                <div class="card shadow-sm" style="border-radius: 10px; overflow: hidden;">
                                     <div class="card-body text-center">
                                         <h5 class="card-title">{{ $layanan->nama }}</h5>
+                                        <p class="card-text text-muted mb-2">
+                                            {{ $layanan->keterangan ?? '-' }}
+                                        </p>
+                                        <p class="fw-bold mb-3">
+                                            Rp {{ number_format($layanan->harga, 0, ',', '.') }}
+                                            @if ($layanan->satuan)
+                                                / {{ $layanan->satuan }}
+                                            @endif
+                                        </p>
+                                    </div>
+
+                                    <!-- Foto layanan ditaruh di bawah full -->
+                                    <div class="text-center p-2">
+                                        @if ($layanan->foto_layanan)
+                                            <img src="{{ asset('storage/' . $layanan->foto_layanan) }}"
+                                                alt="{{ $layanan->nama }}"
+                                                style="max-width:100%; height:auto; border-top:1px solid #eee; border-radius:8px;">
+                                        @else
+                                            <img src="https://via.placeholder.com/250x150" alt="No Image"
+                                                style="max-width:100%; height:auto; border-top:1px solid #eee; border-radius:8px;">
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         @endforeach
+
                     </div>
                 </div>
             </section>
@@ -172,6 +260,14 @@
                     }
                 }
             }
+        });
+
+
+        const imgModal = document.getElementById('imgModal');
+        imgModal.addEventListener('show.bs.modal', function(event) {
+            const trigger = event.relatedTarget;
+            const imgSrc = trigger.getAttribute('data-img');
+            document.getElementById('modalImage').setAttribute('src', imgSrc);
         });
     </script>
 @endsection

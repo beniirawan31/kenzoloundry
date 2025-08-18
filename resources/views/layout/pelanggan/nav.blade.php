@@ -68,7 +68,7 @@
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="nav-link btn btn-link"
@@ -76,7 +76,7 @@
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </button>
                     </form>
-                </li>
+                </li> --}}
             </ul>
         </nav>
         <!-- /.navbar -->
@@ -94,7 +94,7 @@
             <div class="float-right d-none d-sm-block">
                 <b>Version</b> 3.1.0
             </div>
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
+            <strong>Lintau | Kabupaten Tanah Datar | Sumatera Barat &copy; 2025 <a href="{{route('landing')}}">Kenzo Loundry</a>.</strong> All rights
             reserved.
         </footer>
 

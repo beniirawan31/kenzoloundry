@@ -94,7 +94,7 @@ Route::get('/laporan/export/word-all', function () {
 
 
 //landingpage
-Route::get('/', [LandingpageController::class, 'index']);
+Route::get('/', [LandingpageController::class, 'index'])->name('landing');
 
 
 
@@ -120,6 +120,7 @@ Route::post('/pelanggan/order', [PelangganController::class, 'pelangganstore'])-
 
 // Logout Pelanggan
 Route::post('/pelanggan/logout', [PelangganController::class, 'logout'])->name('pelanggan.logout');
+
 
 
 //BayarAdmin

@@ -35,6 +35,7 @@
                                         <th>Harga</th>
                                         <th>Satuan</th>
                                         <th class="text-start">Keterangan</th>
+                                        <th>Foto</th> <!-- dipindah ke belakang -->
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -47,15 +48,25 @@
                                             <td>{{ $layanan->satuan ?? '-' }}</td>
                                             <td class="text-left">{{ $layanan->keterangan }}</td>
                                             <td>
+                                                @if ($layanan->foto_layanan)
+                                                    <img src="{{ asset('storage/' . $layanan->foto_layanan) }}"
+                                                        alt="Foto Layanan" width="70" height="70"
+                                                        style="object-fit: cover; border-radius: 8px;">
+                                                @else
+                                                    <span class="text-muted">-</span>
+                                                @endif
+                                            </td>
+                                            <td>
                                                 <a href="{{ route('layanan.edit', $layanan->id) }}"
-                                                    class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+                                                    class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
 
                                                 <form action="{{ route('layanan.destroy', $layanan->id) }}" method="POST"
-                                                    style="display:inline-block;">
+                                                    class="d-inline delete-form">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger"
-                                                        onclick="return confirm('Yakin ingin menghapus layanan ini?')">
+                                                    <button type="button" class="btn btn-sm btn-danger btn-delete">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </form>
@@ -63,7 +74,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="6">Belum ada layanan tersedia.</td>
+                                            <td colspan="7">Belum ada layanan tersedia.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -75,4 +86,33 @@
             </div>
         </div>
     </section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteForms = document.querySelectorAll('.delete-form');
+
+            deleteForms.forEach(form => {
+                form.querySelector('.btn-delete').addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    Swal.fire({
+                        title: 'Yakin ingin menghapus?',
+                        text: "Data layanan ini tidak bisa dikembalikan!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Ya, hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 @endsection

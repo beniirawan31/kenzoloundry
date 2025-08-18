@@ -12,7 +12,9 @@ class Layanan extends Model
         'nama',
         'harga',
         'satuan',
-        'keterangan'
+        'keterangan',
+        'foto_layanan'
+
     ];
 
     public function orders()

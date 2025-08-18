@@ -53,6 +53,15 @@
                     </a>
                 </li>
 
+                <!-- Menu Kembali ke Website di paling bawah -->
+                <li class="nav-item mt-auto">
+                    <a href="{{ route('landing') }}"
+                        class="nav-link d-flex align-items-center {{ request()->routeIs('pelanggan.pembayaran*') ? 'active-custom' : '' }}">
+                        <i class="nav-icon fas fa-globe fa-sm me-2"></i>
+                        <p class="mb-0" style="font-size: 13px;">Kembali ke Website</p>
+                    </a>
+                </li>
+
 
             </ul>
         </nav>

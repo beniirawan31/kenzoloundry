@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Pelanggan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
@@ -54,12 +55,25 @@ class DashboardController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'harga' => 'required|integer',
+            'harga' => 'required',
             'satuan' => 'nullable|string|max:100',
             'keterangan' => 'nullable|string',
+            'foto_layanan' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        Layanan::create($request->all());
+        $fotoPath = null;
+        if ($request->hasFile('foto_layanan')) {
+            $fotoPath = $request->file('foto_layanan')->store('foto_layanan', 'public');
+        }
+
+        Layanan::create([
+            'nama' => $request->nama,
+            'harga' => $request->harga,
+            'satuan' => $request->satuan,
+            'keterangan' => $request->keterangan,
+            'foto_layanan' => $fotoPath,
+        ]);
+
         return redirect()->route('layanan')->with('success', 'Layanan berhasil ditambahkan');
     }
 
@@ -76,10 +90,26 @@ class DashboardController extends Controller
             'harga' => 'required|integer',
             'satuan' => 'nullable|string|max:100',
             'keterangan' => 'nullable|string',
+            'foto_layanan' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $layanan = Layanan::findOrFail($id);
-        $layanan->update($request->all());
+
+        if ($request->hasFile('foto_layanan')) {
+            // hapus foto lama
+            if ($layanan->foto_layanan && Storage::exists('public/' . $layanan->foto_layanan)) {
+                Storage::delete('public/' . $layanan->foto_layanan);
+            }
+
+            $fotoPath = $request->file('foto_layanan')->store('foto_layanan', 'public');
+            $layanan->foto_layanan = $fotoPath;
+        }
+
+        $layanan->nama = $request->nama;
+        $layanan->harga = $request->harga;
+        $layanan->satuan = $request->satuan;
+        $layanan->keterangan = $request->keterangan;
+        $layanan->save();
 
         return redirect()->route('layanan')->with('success', 'Layanan berhasil diperbarui');
     }
@@ -87,13 +117,18 @@ class DashboardController extends Controller
     public function destroy($id)
     {
         $layanan = Layanan::findOrFail($id);
+
+        if ($layanan->foto_layanan && Storage::exists('public/' . $layanan->foto_layanan)) {
+            Storage::delete('public/' . $layanan->foto_layanan);
+        }
+
         $layanan->delete();
 
-        return redirect()->route('layanan.index')->with('success', 'Layanan berhasil dihapus.');
+        return redirect()->route('layanan')->with('success', 'Layanan berhasil dihapus.');
     }
 
 
-   
+
     public function laporan()
     {
         return view('Admin.Admin.laporan');
@@ -147,7 +182,4 @@ class DashboardController extends Controller
     {
         return view('Admin.Admin.kurir');
     }
-
-
-    
 }
