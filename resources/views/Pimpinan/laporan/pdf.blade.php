@@ -92,7 +92,7 @@
 
     <br><br><br>
     <div style="text-align: right; margin-right: 50px;">
-        Lintau, {{ date('d-m-Y') }} <br><br><br>
+        Taluk, {{ date('d-m-Y') }} <br><br><br>
         <u><b>Nurhayati</b></u>
     </div>
 

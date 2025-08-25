@@ -139,7 +139,7 @@ class PimpinanController extends Controller
             ['align' => 'center']
         );
         $section->addText(
-            "Alamat: Lintau, Kabupaten Tanah Datar, Sumatera Barat",
+            "Alamat: Taluk, Kabupaten Tanah Datar, Sumatera Barat",
             ['size' => 11],
             ['align' => 'center']
         );
@@ -184,7 +184,7 @@ class PimpinanController extends Controller
         // === Tanda Tangan ===
         $section->addTextBreak(3); // spasi kosong
         $section->addText(
-            "Lintau, " . date('d-m-Y'),
+            "Taluk, " . date('d-m-Y'),
             ['size' => 12],
             ['align' => 'right']
         );
