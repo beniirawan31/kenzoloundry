@@ -60,23 +60,27 @@
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label>Tanggal Order</label>
-                        <input type="date" name="tanggal_order" class="form-control" value="{{ old('tanggal_order') }}"
-                            required>
+                        <input type="date" name="tanggal_order" class="form-control"
+                            value="{{ old('tanggal_order', \Carbon\Carbon::now('Asia/Jakarta')->format('Y-m-d')) }}"
+                            min="{{ \Carbon\Carbon::now('Asia/Jakarta')->format('Y-m-d') }}" required>
                     </div>
                     <div class="col-md-4 mb-3">
                         <label>Tanggal Selesai</label>
                         <input type="date" name="tanggal_selesai" class="form-control"
-                            value="{{ old('tanggal_selesai') }}">
+                            value="{{ old('tanggal_selesai') }}"
+                            min="{{ \Carbon\Carbon::now('Asia/Jakarta')->format('Y-m-d') }}">
                     </div>
                     <div class="col-md-4 mb-3">
                         <label>Metode Pembayaran</label>
                         <select name="metode_pembayaran" class="form-control" required>
                             <option value="">-- Pilih Metode --</option>
-                            <option value="Cash" {{ old('metode_pembayaran') == 'Cash' ? 'selected' : '' }}>Cash</option>
+                            <option value="Cash" {{ old('metode_pembayaran') == 'Cash' ? 'selected' : '' }}>Dana</option>
                             <option value="Transfer" {{ old('metode_pembayaran') == 'Transfer' ? 'selected' : '' }}>
-                                Transfer</option>
+                                BRI</option>
                             <option value="E-Wallet" {{ old('metode_pembayaran') == 'E-Wallet' ? 'selected' : '' }}>
-                                E-Wallet</option>
+                                Gopay</option>
+                                <option value="E-Wallet" {{ old('metode_pembayaran') == 'E-Wallet' ? 'selected' : '' }}>
+                                OVO</option>
                         </select>
                     </div>
                 </div>
@@ -97,7 +101,7 @@
                     <label>Nama Pelanggan</label>
                     <input type="text" name="nama" class="form-control" placeholder="Masukkan nama pelanggan"
                         value="{{ old('nama', auth()->guard('pelanggan')->user()->nama ?? '') }}" required>
-                </div>  
+                </div>
                 <div class="mb-3">
                     <label>Bukti Pembayaran</label>
                     <input type="file" name="bukti_pembayaran" class="form-control" accept="image/*">

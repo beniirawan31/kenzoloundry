@@ -128,48 +128,85 @@ class PimpinanController extends Controller
         $laporan = Order::with('pelanggan', 'layanan')
             ->latest() // default urut by created_at desc
             ->get();
-        $phpWord = new PhpWord();
+
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $section = $phpWord->addSection();
 
-        $section->addText("Laporan Transaksi", ['bold' => true, 'size' => 16]);
-        $section->addText("Tanggal Cetak: " . date('d/m/Y H:i'), ['size' => 10]);
+        // === KOP SURAT ===
+        $section->addText(
+            "KENZO LAUNDRY",
+            ['bold' => true, 'size' => 16],
+            ['align' => 'center']
+        );
+        $section->addText(
+            "Alamat: Lintau, Kabupaten Tanah Datar, Sumatera Barat",
+            ['size' => 11],
+            ['align' => 'center']
+        );
+        $section->addTextBreak(1);
+        $section->addLine(['weight' => 2, 'width' => 600, 'height' => 0, 'align' => 'center']); // garis bawah kop
         $section->addTextBreak(1);
 
-        $table = $section->addTable();
+        // === Judul Laporan ===
+        $section->addText(
+            "Laporan Transaksi",
+            ['bold' => true, 'size' => 14],
+            ['align' => 'center']
+        );
+        $section->addText(
+            "Tanggal Cetak: " . Carbon::now('Asia/Jakarta')->format('d/m/Y H:i') . " WIB",
+            ['size' => 10]
+        );
+        $section->addTextBreak(1);
 
-        // Header tabel
+        // === Tabel Data ===
+        $table = $section->addTable();
         $headers = ['No', 'Tgl Order', 'Nama Pelanggan', 'Layanan', 'Berat/Panjang', 'Harga Awal', 'Status Order', 'Status Pembayaran', 'Tgl Selesai', 'Total Bayar'];
         $table->addRow();
         foreach ($headers as $header) {
             $table->addCell()->addText($header, ['bold' => true]);
         }
 
-        // Isi data
         foreach ($laporan as $index => $order) {
             $table->addRow();
             $table->addCell()->addText($index + 1);
-            $table->addCell()->addText($order->tanggal_order ? Carbon::parse($order->tanggal_order)->format('d/m/Y') : '-');
+            $table->addCell()->addText($order->tanggal_order ? \Carbon\Carbon::parse($order->tanggal_order)->format('d/m/Y') : '-');
             $table->addCell()->addText($order->pelanggan->nama ?? '-');
             $table->addCell()->addText($order->layanan->nama ?? '-');
             $table->addCell()->addText($order->jumlah_item);
             $table->addCell()->addText(number_format($order->layanan->harga ?? 0, 0, ',', '.'));
             $table->addCell()->addText($order->status_order);
             $table->addCell()->addText($order->status_pembayaran);
-            $table->addCell()->addText($order->tanggal_selesai ? Carbon::parse($order->tanggal_selesai)->format('d/m/Y') : '-');
+            $table->addCell()->addText($order->tanggal_selesai ? \Carbon\Carbon::parse($order->tanggal_selesai)->format('d/m/Y') : '-');
             $table->addCell()->addText(number_format($order->total_harga ?? 0, 0, ',', '.'));
         }
 
+        // === Tanda Tangan ===
+        $section->addTextBreak(3); // spasi kosong
+        $section->addText(
+            "Lintau, " . date('d-m-Y'),
+            ['size' => 12],
+            ['align' => 'right']
+        );
+        $section->addTextBreak(3); // jarak untuk tanda tangan
+        $section->addText(
+            "Nurhayati",
+            ['underline' => 'single', 'bold' => true, 'size' => 12],
+            ['align' => 'right']
+        );
 
-        // Download
+        // === Download Word ===
         $filename = 'laporan_' . date('Ymd_His') . '.docx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
         header("Content-Disposition: attachment; filename=\"$filename\"");
         header('Cache-Control: max-age=0');
 
-        $writer = IOFactory::createWriter($phpWord, 'Word2007');
+        $writer = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         $writer->save('php://output');
         exit;
     }
+
+
 
 
     public function downloadPdf()

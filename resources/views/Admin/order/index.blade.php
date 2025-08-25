@@ -22,13 +22,13 @@
             <div class="row justify-content-center">
                 <div class="col-12">
                     <div class="card shadow-lg border-0" style="border-radius: 0.75rem; overflow: hidden;">
-                        <div class="card-header d-flex justify-content-between align-items-center"
+                        {{-- <div class="card-header d-flex justify-content-between align-items-center"
                             style="background: linear-gradient(90deg, #320A6B, #5D3BE8); color: white;">
                             <a href="{{ route('order.create') }}" class="btn btn-light btn-sm"
                                 style="border-radius: 20px; font-weight: 500;">
                                 <i class="fas fa-plus"></i> Tambah Order
                             </a>
-                        </div>
+                        </div> --}}
 
                         <div class="card-body p-3">
                             <table id="example2"

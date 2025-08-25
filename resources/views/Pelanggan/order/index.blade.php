@@ -40,8 +40,9 @@
 
                         {{-- Status Order --}}
                         <td>
-                            <span class="badge 
-                                @if($order->status_order == 'Menunggu') bg-warning
+                            <span
+                                class="badge 
+                                @if ($order->status_order == 'Menunggu') bg-warning
                                 @elseif($order->status_order == 'Proses') bg-info
                                 @elseif($order->status_order == 'Selesai') bg-success
                                 @elseif($order->status_order == 'Gagal') bg-danger
@@ -55,8 +56,9 @@
                             @php
                                 $statusPembayaran = $order->status_pembayaran;
                             @endphp
-                            <span class="badge 
-                                @if($statusPembayaran == 'Belum Bayar') bg-danger
+                            <span
+                                class="badge 
+                                @if ($statusPembayaran == 'Belum Bayar') bg-danger
                                 @elseif($statusPembayaran == 'Selesai') bg-success
                                 @elseif($statusPembayaran == 'Gagal') bg-dark
                                 @else bg-secondary @endif">
@@ -64,8 +66,13 @@
                             </span>
                         </td>
 
-                        <td>{{ $order->tanggal_order }}</td>
-                        <td>{{ $order->tanggal_selesai ?? '-' }}</td>
+                        <td>
+                            {{ $order->tanggal_order ? \Carbon\Carbon::parse($order->tanggal_order)->timezone('Asia/Jakarta')->format('d/m/Y') : '-' }}
+                        </td>
+                        <td>
+                            {{ $order->tanggal_selesai ? \Carbon\Carbon::parse($order->tanggal_selesai)->timezone('Asia/Jakarta')->format('d/m/Y') : '-' }}
+                        </td>
+
                     </tr>
                 @empty
                     <tr>
