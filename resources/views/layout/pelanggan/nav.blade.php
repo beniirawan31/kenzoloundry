@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Kenzo</title>
+    <title>Kenzo Pelanggan</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -94,8 +94,7 @@
             <div class="float-right d-none d-sm-block">
                 <b>Version</b> 3.1.0
             </div>
-            <strong>Lintau | Kabupaten Tanah Datar | Sumatera Barat &copy; 2025 <a href="{{route('landing')}}">Kenzo Loundry</a>.</strong> All rights
-            reserved.
+            <strong>Lintau | Kabupaten Tanah Datar | Sumatera Barat &copy; 2025 <a href="{{route('landing')}}">Kenzo Loundry</a>.</strong> 
         </footer>
 
         <aside class="control-sidebar control-sidebar-dark">

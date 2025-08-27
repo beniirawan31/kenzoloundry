@@ -143,7 +143,7 @@ class PelangganController extends Controller
             'layanan_id'         => 'required|exists:layanans,id',
             'jumlah_item'        => 'required|integer|min:1',
             'pesan'              => 'nullable|string|max:255',
-            'metode_pembayaran'  => 'required|in:Cash,Transfer,E-Wallet',
+            'metode_pembayaran'  => 'required|in:Cash,Transfer,E-Wallet,Dana,BRI,GoPay,OVO',
             'tanggal_order'      => 'required|date',
             'tanggal_selesai'    => 'required|date|after_or_equal:tanggal_order',
             'bukti_pembayaran'   => 'nullable|image|mimes:jpg,jpeg,png',

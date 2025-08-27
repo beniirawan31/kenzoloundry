@@ -74,13 +74,16 @@
                         <label>Metode Pembayaran</label>
                         <select name="metode_pembayaran" class="form-control" required>
                             <option value="">-- Pilih Metode --</option>
-                            <option value="Cash" {{ old('metode_pembayaran') == 'Cash' ? 'selected' : '' }}>Dana</option>
+                            <option value="Dana" {{ old('metode_pembayaran') == 'Dana' ? 'selected' : '' }}>Dana</option>
+                            <option value="BRI" {{ old('metode_pembayaran') == 'BRI' ? 'selected' : '' }}>BRI</option>
+                            {{-- <option value="Cash" {{ old('metode_pembayaran') == 'Cash' ? 'selected' : '' }}>Cash</option>
                             <option value="Transfer" {{ old('metode_pembayaran') == 'Transfer' ? 'selected' : '' }}>
-                                BRI</option>
-                            <option value="E-Wallet" {{ old('metode_pembayaran') == 'E-Wallet' ? 'selected' : '' }}>
-                                Gopay</option>
-                                <option value="E-Wallet" {{ old('metode_pembayaran') == 'E-Wallet' ? 'selected' : '' }}>
-                                OVO</option>
+                                Transfer</option>
+                            <option value="E-Wallet" {{ old('metode_pembayaran') == 'E-Wallet' ? 'selected' : '' }}> --}}
+                                E-Wallet</option>
+                            <option value="GoPay" {{ old('metode_pembayaran') == 'GoPay' ? 'selected' : '' }}>GoPay
+                            </option>
+                            <option value="OVO" {{ old('metode_pembayaran') == 'OVO' ? 'selected' : '' }}>OVO</option>
                         </select>
                     </div>
                 </div>
